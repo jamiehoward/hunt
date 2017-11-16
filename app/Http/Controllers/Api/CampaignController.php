@@ -32,9 +32,9 @@ class CampaignController extends Controller
             ]);
 
         $campaign = Campaign::make([
-                'title' => $request->title,
-                'introduction' => $request->introduction,
-                ]);
+            'title' => $request->title,
+            'introduction' => $request->introduction,
+            ]);
 
         \Auth::user()->campaigns()->save($campaign);
 
@@ -81,8 +81,9 @@ class CampaignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Campaign $campaign)
     {
-        //
+        $campaign->delete();
+        return \Auth::user()->campaigns()->orderByDesc('created_at')->get();
     }
 }

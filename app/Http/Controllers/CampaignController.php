@@ -60,7 +60,9 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        //
+        $data = ['campaign' => $campaign];
+        
+        return view('campaigns.show', $data);
     }
 
     /**

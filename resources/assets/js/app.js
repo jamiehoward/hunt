@@ -16,8 +16,8 @@ window.Vue = require('vue');
  */
 
 
-Vue.component('create-campaign', require('./components/CreateCampaign.vue'));
 Vue.component('campaign-list', require('./components/CampaignList.vue'));
+Vue.component('campaign-detail', require('./components/CampaignDetail.vue'));
 
 Vue.component(
     'passport-clients',
@@ -36,14 +36,13 @@ Vue.component(
 
 
 const app = new Vue({
-    name: 'app',
-    el: '#app',
-    data : function () {
-        campaigns : []
-    }
+    el: '#app'
 });
 
-window.axios.defaults.headers.common = {
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
-};
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}

@@ -1,11 +1,10 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Clue campaigns</div>
-                    <div class="panel-body">
-
+            <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Clue campaigns</h4>
                         <form id="create-campaign-form"  v-on:submit.prevent="saveCampaign">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder='Title' v-model="title" required />
@@ -23,26 +22,45 @@
 
                         <hr />
 
-                        <ul class="list-group">
-                            <li v-for="campaign in campaigns" :key="campaign.id" v-on:campaignSaved="getCampaigns" class="list-group-item">
-                                <div>
-                                        <h3>{{campaign.title}}</h3>
-                                        <p>{{campaign.introduction}}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="text-center">
+                            <h3 class="text-muted" v-if="campaigns.length == 0">No campaigns yet. Add one!</h3>
+                        </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-columns">
+                                    <div class="card" v-for="campaign in campaigns" :key="campaign.id" v-on:campaignSaved="getCampaigns" >
+                                      <div class="card-body">
+                                        <h3 class="card-title">{{campaign.title}}</h3>
+                                        <p class="card-text">{{campaign.introduction}}</p>
+                                        <a v-bind:href="getCampaignLink(campaign.id)" class="card-link">Edit</a>
+                                        <a href="#" class="card-link text-danger" v-on:click="deleteCampaign(campaign.id)">Delete</a>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+        </div>
     </div>
+
 </template>
 
 <script>
     export default {
-        props: ['campaigns', 'title', 'intro'],
+        data : function() {
+            return {
+                campaigns :[], 
+                title: '', 
+                intro: ''
+            }
+        },
         methods: {
             saveCampaign : function () {                
                 const self = this;
@@ -51,10 +69,51 @@
                   .then(function(response){
                     self.campaigns.unshift(response.data);
                     self.title = self.intro = '';
+
+                    swal("Campaign successfully created!", {
+                      icon: 'success',
+                      button: false,
+                      timer: 1500
+                    });
+
                   });
+            },
+            getCampaignLink : function(id) {
+                return '/campaigns/' + id;
             },
             getCampaigns: function() {
                 axios.get('/api/campaigns').then(response => this.campaigns = response.data);    
+            },
+            deleteCampaign : function(id) {
+                const self = this;
+
+                swal("Are you sure that you want to delete this campaign?", {
+                  buttons: {
+                    cancel: "Cancel",
+                    delete: true,
+                  },
+                })
+                .then((value) => {
+                  switch (value) {
+                 
+                    case "cancel":
+                      swal.close();
+                      break;
+                 
+                    case "delete":
+                      axios.delete('/api/campaigns/' + id)
+                          .then(function(response){
+                            self.campaigns = response.data;
+
+                            swal("Campaign successfully deleted!", {
+                              icon: 'success',
+                              button: false,
+                              timer: 1500
+                            });
+
+                          });
+                  }
+                });
             }
         },
         mounted() {
