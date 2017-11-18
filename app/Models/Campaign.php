@@ -17,4 +17,17 @@ class Campaign extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('code');
     }
+
+    public static function findByCode(string $code)
+    {
+        foreach (Campaign::get() as $campaign) {
+            if ($campaign->players()->count() > 0) {
+                foreach ($campaign->players as $player) {
+                    if ($code == $player->pivot->code) {
+                        return $campaign;
+                    }
+                }
+            }
+        }
+    }
 }

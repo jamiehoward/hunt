@@ -22,3 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('campaigns', 'CampaignController');
 });
+
+Route::get('/{code}', 'PlayController@index');
+Route::get('/play/{id}', 'PlayController@show');

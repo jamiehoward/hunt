@@ -12,6 +12,10 @@
     -webkit-column-count: 3;
             column-count: 3;
   }
+
+  .display-2 {
+    font-size: 4.5rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -19,12 +23,20 @@
     -webkit-column-count: 2;
             column-count: 2;
   }
+
+  .display-2 {
+    font-size: 3.6rem;
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .card-columns {
     -webkit-column-count: 1;
             column-count: 1;
+  }
+
+  .display-2 {
+    font-size: 3rem;
   }
 }
 
