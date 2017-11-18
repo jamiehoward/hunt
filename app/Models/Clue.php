@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clue extends Model
 {
+    public $fillable = ['label', 'answer'];
+    
     public function campaign()
     {
         return $this->hasOne(Campaign::class);

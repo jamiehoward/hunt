@@ -19,26 +19,6 @@
                 </form>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <h4 class="card-title">Clues</h4>
-                <div class="list-group">
-                  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="clue in clues">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{clue.label}}</h5>
-                      <!-- <small>3 days ago</small> -->
-                    </div>
-                    <p class="mb-1">{{clue.answer}}</p>
-                    <!-- <small>Donec id elit non mi porta.</small> -->
-                  </a>
-                </div>
-
-                <div class="text-center">
-                    <h3 class="text-muted" v-if="clues.length == 0">No clues yet. Add one!</h3>
-                </div>
-            </div>
-        </div>
         
         <div class="row">
         </div>
@@ -51,19 +31,17 @@
         props : ['campaign'],
         data : function() {
             return {
-                clues : [],
                 label: '', 
                 answer: ''
             }
         },
         methods: {
-            saveClue : function () {
+            saveClue : function () {                
                 const self = this;
 
                 axios.post('/api/campaigns/' + this.campaign + '/clues', { label: this.label, answer: this.answer })
                   .then(function(response){
-                    self.getClues();
-                    
+                    getClues();
                     self.label = self.answer = '';
 
                     swal("Clue successfully created!", {
@@ -73,13 +51,7 @@
                     });
 
                   });
-            },
-            getClues: function() {
-                axios.get('/api/campaigns/' + this.campaign + '/clues').then(response => this.clues = response.data);    
-            },
-        },
-        mounted() {
-            this.getClues();
+            }
         }
     }
 </script>

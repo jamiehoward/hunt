@@ -70,9 +70,19 @@ class CampaignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Campaign $campaign)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'introduction' => 'required',
+            ]);
+
+        $campaign->update([
+            'title' => $request->title,
+            'introduction' => $request->introduction,
+            ]);
+
+        return response($campaign);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Clue;
 use App\Models\Campaign;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ClueController extends Controller
@@ -35,9 +36,21 @@ class ClueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(int $campaignId, Request $request)
     {
-        //
+        $this->validate($request, [
+            'label' => 'required',
+            'answer' => 'required',
+            ]);
+
+        $campaign = Campaign::findOrFail($campaignId);
+
+        $clue = Clue::make([
+            'label' => $request->label,
+            'answer' => $request->answer,
+            ]);
+
+        $campaign->clues()->save($clue);
     }
 
     /**

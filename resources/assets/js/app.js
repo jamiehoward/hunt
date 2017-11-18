@@ -19,6 +19,7 @@ window.Vue = require('vue');
 Vue.component('campaign-list', require('./components/CampaignList.vue'));
 Vue.component('campaign-detail', require('./components/CampaignDetail.vue'));
 Vue.component('clue-list', require('./components/ClueList.vue'));
+Vue.component('clue-create', require('./components/ClueCreate.vue'));
 
 Vue.component(
     'passport-clients',

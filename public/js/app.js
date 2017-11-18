@@ -1461,6 +1461,7 @@ window.Vue = __webpack_require__(40);
 Vue.component('campaign-list', __webpack_require__(41));
 Vue.component('campaign-detail', __webpack_require__(44));
 Vue.component('clue-list', __webpack_require__(47));
+Vue.component('clue-create', __webpack_require__(70));
 
 Vue.component('passport-clients', __webpack_require__(50));
 
@@ -41063,6 +41064,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
@@ -41078,9 +41101,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/campaigns/' + this.id).then(function (response) {
                 return _this.campaign = response.data;
             });
+        },
+        saveCampaign: function saveCampaign() {
+            var self = this;
+
+            axios.put('/api/campaigns/' + this.campaign.id, { title: this.campaign.title, introduction: this.campaign.introduction }).then(function (response) {
+
+                swal("Campaign successfully update!", {
+                    icon: 'success',
+                    button: false,
+                    timer: 1500
+                });
+
+                self.getCampaign();
+                self.hideEditForm();
+            });
+        },
+        showEditForm: function showEditForm() {
+            $("#campaign-edit-form").show();
+            $("#campaign-header").hide();
+            $("#campaign-title").focus();
+        },
+        hideEditForm: function hideEditForm() {
+            $("#campaign-edit-form").hide();
+            $("#campaign-header").show();
         }
     },
     mounted: function mounted() {
+        $("#campaign-edit-form").hide();
         this.getCampaign();
     }
 });
@@ -41095,22 +41143,121 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h4", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(_vm.campaign.title))
-            ]),
-            _vm._v(" "),
-            _c("h5", { staticClass: "card-subtitle text-gray" }, [
-              _vm._v("Introduction:")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(_vm._s(_vm.campaign.introduction))
-            ])
+      _c("div", { staticClass: "col text-center" }, [
+        _c("div", { attrs: { id: "campaign-header" } }, [
+          _c(
+            "h1",
+            {
+              staticClass: "display-3 text-primary",
+              on: { click: _vm.showEditForm }
+            },
+            [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.campaign.title) +
+                  "\n                "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.campaign.introduction) +
+                "\n                "
+            )
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-left", attrs: { id: "campaign-edit-form" } },
+          [
+            _c("h1", { staticClass: "display-3" }, [_vm._v("Edit campaign")]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.saveCampaign($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.campaign.title,
+                        expression: "campaign.title"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "campaign-title" },
+                    domProps: { value: _vm.campaign.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.campaign, "title", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.campaign.introduction,
+                        expression: "campaign.introduction"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.campaign.introduction },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.campaign,
+                          "introduction",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { href: "#" },
+                      on: { click: _vm.hideEditForm }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit", value: "Save changes" }
+                  })
+                ])
+              ]
+            )
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
@@ -41207,15 +41354,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['campaign'],
     data: function data() {
         return {
-            clues: []
+            clues: [],
+            label: '',
+            answer: ''
         };
     },
     methods: {
+        saveClue: function saveClue() {
+            var self = this;
+
+            axios.post('/api/campaigns/' + this.campaign + '/clues', { label: this.label, answer: this.answer }).then(function (response) {
+                self.getClues();
+
+                self.label = self.answer = '';
+
+                swal("Clue successfully created!", {
+                    icon: 'success',
+                    button: false,
+                    timer: 1500
+                });
+            });
+        },
         getClues: function getClues() {
             var _this = this;
 
@@ -41238,10 +41424,80 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("h4", { staticClass: "card-title" }, [_vm._v("Add a new clue")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { id: "create-campaign-form" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.saveClue($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.label,
+                    expression: "label"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Label", required: "" },
+                domProps: { value: _vm.label },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.label = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.answer,
+                    expression: "answer"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Answer", required: "" },
+                domProps: { value: _vm.answer },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.answer = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col" }, [
+        _c("h4", { staticClass: "card-title" }, [_vm._v("Clues")]),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "list-group" },
@@ -41268,7 +41524,15 @@ var render = function() {
               ]
             )
           })
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center" }, [
+          _vm.clues.length == 0
+            ? _c("h3", { staticClass: "text-muted" }, [
+                _vm._v("No clues yet. Add one!")
+              ])
+            : _vm._e()
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -41280,7 +41544,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row col" }, [_c("h2", [_vm._v("Clues")])])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        staticClass: "btn btn-block btn-primary",
+        attrs: { type: "submit", value: "Save Clue" }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -43452,6 +43721,222 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(71)
+/* template */
+var __vue_template__ = __webpack_require__(72)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ClueCreate.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43da83e8", Component.options)
+  } else {
+    hotAPI.reload("data-v-43da83e8", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['campaign'],
+    data: function data() {
+        return {
+            label: '',
+            answer: ''
+        };
+    },
+    methods: {
+        saveClue: function saveClue() {
+            var self = this;
+
+            axios.post('/api/campaigns/' + this.campaign + '/clues', { label: this.label, answer: this.answer }).then(function (response) {
+                getClues();
+                self.label = self.answer = '';
+
+                swal("Clue successfully created!", {
+                    icon: 'success',
+                    button: false,
+                    timer: 1500
+                });
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("h4", { staticClass: "card-title" }, [_vm._v("Add a new clue")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { id: "create-campaign-form" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.saveClue($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.label,
+                    expression: "label"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Label", required: "" },
+                domProps: { value: _vm.label },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.label = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.answer,
+                    expression: "answer"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Answer", required: "" },
+                domProps: { value: _vm.answer },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.answer = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" })
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        staticClass: "btn btn-block btn-primary",
+        attrs: { type: "submit", value: "Save Clue" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-43da83e8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
