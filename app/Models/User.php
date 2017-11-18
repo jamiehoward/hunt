@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Campaign::class);
     }
+
+    public function games()
+    {
+        return $this->belongsTo(Campaign::class)->withPivot('code');
+    }
 }

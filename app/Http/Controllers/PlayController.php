@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clue;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
 
@@ -17,15 +18,35 @@ class PlayController extends Controller
             }
         }
 
-        return redirect("/play/{$campaign->id}");
+        return redirect("/play/$code");
     }
 
-    public function show(int $id)
+    public function show(string $code)
+    {
+        $campaign = Campaign::findByCode($code);
+
+        if (! $campaign) {
+            dd('Invalid campaign code!');
+        }
+        
+        return $this->showClue($campaign->clues()->first());
+    }
+
+    protected function showIntro(Campaign $campaign)
     {
         $data = [
-            'campaign' => Campaign::findOrFail($id)
+            'campaign' => $campaign
         ];
 
         return view('play.intro', $data);
+    }
+
+    protected function showClue(Clue $clue)
+    {
+        $data = [
+            'clue' => $clue
+        ];
+
+        return view('play.step', $data);
     }
 }

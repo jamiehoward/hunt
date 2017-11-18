@@ -24,4 +24,4 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::get('/{code}', 'PlayController@index');
-Route::get('/play/{id}', 'PlayController@show');
+Route::get('/play/{code}', 'PlayController@show');
