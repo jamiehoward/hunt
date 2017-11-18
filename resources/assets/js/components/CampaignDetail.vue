@@ -15,11 +15,11 @@
                     <h1 class="display-3">Edit campaign</h1>
                     <form v-on:submit.prevent="saveCampaign">
                         <div class="form-group">
-                            <input type="text" v-model='campaign.title' class="form-control" id="campaign-title" />
+                            <input type="text" v-model='campaign.title' class="form-control form-control-lg" id="campaign-title" />
                         </div>
 
                         <div class="form-group">
-                            <textarea type="text" v-model='campaign.introduction' class="form-control"></textarea>
+                            <textarea type="text" v-model='campaign.introduction' class="form-control form-control-lg"></textarea>
                         </div>
 
                         <div class="form-group">

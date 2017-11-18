@@ -12,4 +12,9 @@ class Campaign extends Model
     {
         return $this->hasMany(Clue::class);
     }
+
+    public function players()
+    {
+        return $this->belongsToMany(User::class)->withPivot('code');
+    }
 }

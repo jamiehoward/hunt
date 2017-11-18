@@ -5,12 +5,12 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-10">
+            <div class="col-lg-9">
                 <clue-list v-bind:campaign="{{$campaign->id}}"></clue-list>
             </div>
 
-            <div class="col-2">
-                Here is the sidebar
+            <div class="col-lg-3">
+                <player-list v-bind:campaign="{{$campaign->id}}"></player-list>
             </div>
         </div>
     </div>

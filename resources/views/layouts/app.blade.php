@@ -25,20 +25,13 @@
                     <a href="{{ route('register') }}">Register</a>
                 </div>
             @else
-                <div class="dropdown show">
-                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{auth()->user()->name}}
-                  </a>
+                <div>
+                  Hey, {{auth()->user()->name}}! 
+                  (<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>)
 
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="position:relative;left:65px;top:25px;">
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                         </form>
-                  </div>
                 </div>
             @endguest
         </nav>
@@ -59,6 +52,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace();
+        $('[data-toggle="tooltip"]').tooltip();
     </script>
 </body>
 </html>
