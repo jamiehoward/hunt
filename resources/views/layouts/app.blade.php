@@ -16,7 +16,7 @@
 <body>
     <div id="app">  
         <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ url('/campaigns') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
             @guest

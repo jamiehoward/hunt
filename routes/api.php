@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('campaigns', 'Api\CampaignController');
+    Route::get('campaigns/{id}/clues', 'Api\ClueController@index');
 });

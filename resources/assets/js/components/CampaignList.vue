@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Clue campaigns</h4>
+                    <div class="card-body">
+                        <h4 class="card-title">Add a new clue campaign</h4>
                         <form id="create-campaign-form"  v-on:submit.prevent="saveCampaign">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder='Title' v-model="title" required />
@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" class="btn btn-block btn-primary" value="Add Campaign">
+                                <input type="submit" class="btn btn-block btn-primary" value="Save Campaign">
                             </div>
 
                         </form>
@@ -28,6 +28,7 @@
 
                         <div class="row">
                             <div class="col">
+                                <h4 class="card-title">My campaigns</h4>
                                 <div class="card-columns">
                                     <div class="card" v-for="campaign in campaigns" :key="campaign.id" v-on:campaignSaved="getCampaigns" >
                                       <div class="card-body">
@@ -41,7 +42,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
