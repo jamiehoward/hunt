@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampaignUserTable extends Migration
+class CreateAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateCampaignUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaign_user', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('campaign_id');
+            $table->unsignedInteger('clue_id');
             $table->unsignedInteger('user_id');
-            $table->string('code');
-            $table->dateTime('started_at');
+            $table->string('content');
+            $table->boolean('correct');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +30,6 @@ class CreateCampaignUserTable extends Migration
      */
     public function down()
     {
-            Schema::dropIfExists('campaign_user');
+        Schema::dropIfExists('answers');
     }
 }

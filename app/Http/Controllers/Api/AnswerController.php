@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Clue;
 use App\Models\Answer;
-use App\Models\Campaign;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ClueController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(int $id)
+    public function index()
     {
-        $campaign = Campaign::findOrFail($id);
-        return response($campaign->clues);
+        //
     }
 
     /**
@@ -37,21 +34,22 @@ class ClueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(int $campaignId, Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'label' => 'required',
-            'answer' => 'required',
+            'clue_id' => 'required|int',
+            'content' => 'required',
             ]);
 
-        $campaign = Campaign::findOrFail($campaignId);
+        $clue = Clue::findOrFail($request->clue_id);
 
-        $clue = Clue::make([
-            'label' => $request->label,
-            'answer' => $request->answer,
+        $answer = Answer::create([
+            'clue_id' => $clue->id,
+            'user_id' => \Auth::user()->id,
+            'content' => $request->content,
             ]);
 
-        $campaign->clues()->save($clue);
+        return response($answer);
     }
 
     /**
@@ -62,7 +60,7 @@ class ClueController extends Controller
      */
     public function show(Clue $clue)
     {
-        return response($clue);
+        //
     }
 
     /**
@@ -97,28 +95,5 @@ class ClueController extends Controller
     public function destroy(Clue $clue)
     {
         //
-    }
-
-    protected function isCorrectAnswer($submitted, $answer)
-    {
-        return trim(strtolower($submitted)) == trim(strtolower($answer));
-    }
-
-    public function storeAnswer(Clue $clue, Request $request)
-    {
-        $this->validate($request, [
-            'content' => 'required',
-            ]);
-
-        $correct = $this->isCorrectAnswer($request->content, $clue->answer);
-
-        $answer = Answer::create([
-            'clue_id' => $clue->id,
-            'user_id' => \Auth::user()->id,
-            'content' => trim($request->content),
-            'correct' => (int) $correct
-            ]);
-
-        return response($answer);
     }
 }

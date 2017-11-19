@@ -1464,6 +1464,7 @@ Vue.component('campaign-detail', __webpack_require__(44));
 Vue.component('clue-list', __webpack_require__(47));
 Vue.component('clue-create', __webpack_require__(50));
 Vue.component('player-list', __webpack_require__(53));
+Vue.component('clue-show', __webpack_require__(78));
 
 Vue.component('passport-clients', __webpack_require__(56));
 
@@ -44208,6 +44209,280 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(79)
+/* template */
+var __vue_template__ = __webpack_require__(80)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/play/ClueShow.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-78b3ca2c", Component.options)
+  } else {
+    hotAPI.reload("data-v-78b3ca2c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
+    data: function data() {
+        return {
+            answer: '',
+            clue: {}
+        };
+    },
+    methods: {
+        getClue: function getClue() {
+            var self = this;
+
+            axios.get('/api/clues/' + this.id).then(function (response) {
+                self.clue = response.data;
+            });
+        },
+        submitAnswer: function submitAnswer() {
+            var self = this;
+
+            axios.post('/api/clues/' + this.clue.id + '/answers', { content: this.answer }).then(function (response) {
+
+                self.answer = '';
+
+                if (response.data.correct) {
+                    swal("Your answer was correct!", {
+                        icon: 'success',
+                        button: false,
+                        timer: 3000
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                } else {
+                    swal("Your answer was incorrect!", {
+                        icon: 'error',
+                        button: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.getClue();
+    }
+});
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row align-items-center" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("div", { staticClass: "row text-center" }, [
+          _c("div", { staticClass: "col text-center" }, [
+            _c("h1", { staticClass: "display-2" }, [
+              _vm._v(_vm._s(_vm.clue.label))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-4 offset-lg-4 text-center" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.submitAnswer($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.answer,
+                        expression: "answer"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Answer",
+                      "aria-label": "Answer",
+                      required: ""
+                    },
+                    domProps: { value: _vm.answer },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.answer = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row align-items-start" }, [
+      _c("div", { staticClass: "col-lg-4 offset-lg-4 text-center" }, [
+        _c("div", { staticClass: "progress", staticStyle: { height: "2px" } }, [
+          _c("div", {
+            staticClass: "progress-bar bg-warning",
+            staticStyle: { width: "25%" },
+            attrs: {
+              role: "progressbar",
+              "aria-valuenow": "25",
+              "aria-valuemin": "0",
+              "aria-valuemax": "100"
+            }
+          })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-btn" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-warning", attrs: { type: "button" } },
+        [_vm._v("Guess!")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row align-items-end" }, [
+      _c("div", { staticClass: "col" }, [
+        _vm._v("\n                 \n        ")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-78b3ca2c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

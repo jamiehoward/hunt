@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CampaignsTableSeeder::class);
         $this->call(CluesTableSeeder::class);
         $this->call(CampaignUserTableSeeder::class);
+        $this->call(AnswersTableSeeder::class);
     }
 }

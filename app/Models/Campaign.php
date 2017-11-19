@@ -18,6 +18,17 @@ class Campaign extends Model
         return $this->belongsToMany(User::class)->withPivot('code');
     }
 
+    public function incompleteClues()
+    {
+        return $this->clues()->get()->reject(function($clue) {
+            foreach(\Auth::user()->answers as $answer) {
+                if ($answer->clue_id == $clue->id && $answer->correct == 1) {
+                    return true;
+                }
+            }
+        });
+    }
+
     public static function findByCode(string $code)
     {
         foreach (Campaign::get() as $campaign) {

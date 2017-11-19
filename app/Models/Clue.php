@@ -12,4 +12,9 @@ class Clue extends Model
     {
         return $this->hasOne(Campaign::class);
     }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }

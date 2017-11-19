@@ -16,6 +16,7 @@
 .card-columns {
     column-count: 4;
 }
+.display-2 { font-size: 4.5rem; }
 
 @media only screen and (max-width: 990px) {
     .card-columns { column-count: 3; }
@@ -29,7 +30,7 @@
 
 @media only screen and (max-width: 600px) {
     .card-columns { column-count: 1; }
-    .display-2 { font-size: 3rem; }
+    .display-2 { font-size: 2rem; }
 }
 
 

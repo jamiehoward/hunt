@@ -23,5 +23,8 @@ class CampaignUserTableSeeder extends Seeder
             }
 
         }
+
+        $campaign = Campaign::find(1);
+        $campaign->players()->attach(1, ['code' => 'TEST123']);
     }
 }

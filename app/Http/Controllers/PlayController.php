@@ -26,10 +26,22 @@ class PlayController extends Controller
         $campaign = Campaign::findByCode($code);
 
         if (! $campaign) {
-            dd('Invalid campaign code!');
+            return $this->showInvalidCampaignError();
         }
         
-        return $this->showClue($campaign->clues()->first());
+        $clues = $campaign->incompleteClues();
+
+        // if ($clues->count() == $campaign->clues->count()) {
+        //     return $this->showIntro($campaign);
+        // } elseif ($clues->count() == 0) {
+        //     return view('play.resolution');
+        // }
+
+        return $this->showClue($clues->first());
+    }
+
+    protected function showInvalidCampaignError() {
+        return view('play.invalid');
     }
 
     protected function showIntro(Campaign $campaign)

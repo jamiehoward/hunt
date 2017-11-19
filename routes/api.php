@@ -25,4 +25,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('campaigns/{id}/players', 'Api\CampaignUserController@index');
     Route::post('campaigns/{id}/players', 'Api\CampaignUserController@store');
+    
+    Route::get('clues/{clue}', 'Api\ClueController@show');
+    Route::post('clues/{clue}/answers', 'Api\ClueController@storeAnswer');
 });

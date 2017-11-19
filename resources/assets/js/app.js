@@ -21,6 +21,7 @@ Vue.component('campaign-detail', require('./components/CampaignDetail.vue'));
 Vue.component('clue-list', require('./components/ClueList.vue'));
 Vue.component('clue-create', require('./components/ClueCreate.vue'));
 Vue.component('player-list', require('./components/PlayerList.vue'));
+Vue.component('clue-show', require('./components/play/ClueShow.vue'));
 
 Vue.component(
     'passport-clients',

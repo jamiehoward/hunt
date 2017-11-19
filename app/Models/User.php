@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Campaign::class)->withPivot('code');
     }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }
