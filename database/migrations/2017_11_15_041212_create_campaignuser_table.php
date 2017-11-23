@@ -18,7 +18,7 @@ class CreateCampaignUserTable extends Migration
             $table->unsignedInteger('campaign_id');
             $table->unsignedInteger('user_id');
             $table->string('code');
-            $table->dateTime('started_at');
+            $table->dateTime('started_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

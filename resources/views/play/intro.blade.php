@@ -19,7 +19,7 @@
 
                 <div class="row">
                     <div class="col text-center">
-                        <a href="#" class="btn btn-lg btn-info">Begin!</a>
+                        <a href="#" onclick="window.location.reload()" class="btn btn-lg btn-info">Begin!</a>
                     </div>
                 </div>
             </div>

@@ -42446,7 +42446,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
+    props: ['id', 'percentage'],
     data: function data() {
         return {
             answer: '',
@@ -42460,6 +42460,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/clues/' + this.id).then(function (response) {
                 self.clue = response.data;
             });
+        },
+        getProgressWidth: function getProgressWidth() {
+            return "width: " + this.percentage + "%";
         },
         submitAnswer: function submitAnswer() {
             var self = this;
@@ -42500,7 +42503,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "row align-items-start" }, [
+      _c("div", { staticClass: "col-lg-4 offset-lg-4 text-center" }, [
+        _c("div", { staticClass: "progress", staticStyle: { height: "2px" } }, [
+          _c("div", {
+            staticClass: "progress-bar bg-warning",
+            style: _vm.getProgressWidth(),
+            attrs: {
+              role: "progressbar",
+              "aria-valuenow": _vm.percentage,
+              "aria-valuemin": "0",
+              "aria-valuemax": "100"
+            }
+          })
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row align-items-center" }, [
       _c("div", { staticClass: "col" }, [
@@ -42553,7 +42571,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(0)
                 ])
               ]
             )
@@ -42562,31 +42580,10 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-start" }, [
-      _c("div", { staticClass: "col-lg-4 offset-lg-4 text-center" }, [
-        _c("div", { staticClass: "progress", staticStyle: { height: "2px" } }, [
-          _c("div", {
-            staticClass: "progress-bar bg-warning",
-            staticStyle: { width: "25%" },
-            attrs: {
-              role: "progressbar",
-              "aria-valuenow": "25",
-              "aria-valuemin": "0",
-              "aria-valuemax": "100"
-            }
-          })
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

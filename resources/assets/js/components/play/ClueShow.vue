@@ -3,7 +3,7 @@
         <div class="row align-items-start">
             <div class="col-lg-4 offset-lg-4 text-center">
                 <div class="progress" style="height:2px;">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-warning" role="progressbar" v-bind:style="getProgressWidth()" v-bind:aria-valuenow="percentage" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
 
 <script>
     export default {
-        props : ['id'],
+        props : ['id', 'percentage'],
         data : function() {
             return {
                 answer: '',
@@ -56,6 +56,9 @@
                     .then(function(response) {
                         self.clue = response.data;
                     });
+            },
+            getProgressWidth : function (){
+                return "width: " + this.percentage + "%";
             },
             submitAnswer : function () {                
                 const self = this;

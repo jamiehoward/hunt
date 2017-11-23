@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clue;
 use App\Models\Campaign;
+use App\Models\CampaignUser;
 use Illuminate\Http\Request;
 
 class PlayController extends Controller
@@ -23,41 +24,46 @@ class PlayController extends Controller
 
     public function show(string $code)
     {
-        $campaign = Campaign::findByCode($code);
+        $code = CampaignUser::where('code', $code)->firstOrFail();
 
-        if (! $campaign) {
+        if (! $code->campaign) {
             return $this->showInvalidCampaignError();
         }
         
-        $clues = $campaign->incompleteClues();
+        $clues = $code->campaign->incompleteClues();
 
-        if ($clues->count() == $campaign->clues->count()) {
-            return $this->showIntro($campaign);
+        if (is_null($code->started_at)) {
+            return $this->showIntro($code);
         } elseif ($clues->count() == 0) {
             return view('play.resolution');
         }
 
-        return $this->showClue($clues->first());
+        return $this->showClue($code);
     }
 
     protected function showInvalidCampaignError() {
         return view('play.invalid');
     }
 
-    protected function showIntro(Campaign $campaign)
+    protected function showIntro(CampaignUser $code)
     {
+        $code->begin();
+
         $data = [
-            'campaign' => $campaign
+            'campaign' => $code->campaign
         ];
 
         return view('play.intro', $data);
     }
 
-    protected function showClue(Clue $clue)
+    protected function showClue(CampaignUser $code)
     {
         $data = [
-            'clue' => $clue
+            'clue' => $code->nextClue(),
+            'percentage' => $code->completionPercentage
         ];
+
+        // dd($data);
 
         return view('play.step', $data);
     }
