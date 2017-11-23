@@ -96,7 +96,8 @@ class ClueController extends Controller
      */
     public function destroy(Clue $clue)
     {
-        //
+        $clue->delete();
+        return response('Clue has been deleted.');
     }
 
     protected function isCorrectAnswer($submitted, $answer)

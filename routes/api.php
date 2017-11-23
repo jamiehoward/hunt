@@ -28,4 +28,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     
     Route::get('clues/{clue}', 'Api\ClueController@show');
     Route::post('clues/{clue}/answers', 'Api\ClueController@storeAnswer');
+    Route::delete('clues/{clue}', 'Api\ClueController@destroy');
+    
+    Route::put('players/{player}', 'Api\PlayerController@update');
 });

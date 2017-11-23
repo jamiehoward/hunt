@@ -31,11 +31,11 @@ class PlayController extends Controller
         
         $clues = $campaign->incompleteClues();
 
-        // if ($clues->count() == $campaign->clues->count()) {
-        //     return $this->showIntro($campaign);
-        // } elseif ($clues->count() == 0) {
-        //     return view('play.resolution');
-        // }
+        if ($clues->count() == $campaign->clues->count()) {
+            return $this->showIntro($campaign);
+        } elseif ($clues->count() == 0) {
+            return view('play.resolution');
+        }
 
         return $this->showClue($clues->first());
     }

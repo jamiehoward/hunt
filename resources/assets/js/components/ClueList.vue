@@ -27,7 +27,9 @@
                   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="clue in clues">
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1">{{clue.label}}</h5>
-                      <!-- <small>3 days ago</small> -->
+                      <button type="button" class="close" aria-label="Close" v-on:click="deleteClue(clue.id)">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                     </div>
                     <p class="mb-1">{{clue.answer}}</p>
                     <!-- <small>Donec id elit non mi porta.</small> -->
@@ -73,6 +75,37 @@
                     });
 
                   });
+            },
+            deleteClue: function(id) {
+                const self = this;
+
+                swal("Are you sure that you want to delete this clue?", {
+                  buttons: {
+                    cancel: "Cancel",
+                    delete: true,
+                  },
+                })
+                .then((value) => {
+                  switch (value) {
+                 
+                    case "cancel":
+                      swal.close();
+                      break;
+                 
+                    case "delete":
+                      axios.delete('/api/clues/' + id)
+                          .then(function(response){
+                            self.getClues();
+
+                            swal("Campaign successfully deleted!", {
+                              icon: 'success',
+                              button: false,
+                              timer: 1500
+                            });
+
+                          });
+                  }
+                });
             },
             getClues: function() {
                 axios.get('/api/campaigns/' + this.campaign + '/clues').then(response => this.clues = response.data);    
