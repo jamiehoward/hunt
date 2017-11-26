@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Campaign extends Model
 {
-    public $fillable = ['title', 'introduction'];
+    public $fillable = ['title', 'introduction', 'resolution_text', 'resolution_link'];
 
     public function clues()
     {

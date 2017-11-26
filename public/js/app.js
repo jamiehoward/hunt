@@ -41089,6 +41089,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
@@ -41108,7 +41121,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveCampaign: function saveCampaign() {
             var self = this;
 
-            axios.put('/api/campaigns/' + this.campaign.id, { title: this.campaign.title, introduction: this.campaign.introduction }).then(function (response) {
+            axios.put('/api/campaigns/' + this.campaign.id, {
+                title: this.campaign.title,
+                introduction: this.campaign.introduction,
+                resolution_text: this.campaign.resolution_text,
+                resolution_link: this.campaign.resolution_link
+            }).then(function (response) {
 
                 swal("Campaign successfully update!", {
                     icon: 'success',
@@ -41190,6 +41208,10 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "form-group" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Campaign title")
+                  ]),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -41214,6 +41236,10 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Introduction text")
+                  ]),
+                  _vm._v(" "),
                   _c("textarea", {
                     directives: [
                       {
@@ -41234,6 +41260,71 @@ var render = function() {
                         _vm.$set(
                           _vm.campaign,
                           "introduction",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Resolution text")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.campaign.resolution_text,
+                        expression: "campaign.resolution_text"
+                      }
+                    ],
+                    staticClass: "form-control form-control-lg",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.campaign.resolution_text },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.campaign,
+                          "resolution_text",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Resolution link")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.campaign.resolution_link,
+                        expression: "campaign.resolution_link"
+                      }
+                    ],
+                    staticClass:
+                      "form-control\n                         form-control-lg",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.campaign.resolution_link },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.campaign,
+                          "resolution_link",
                           $event.target.value
                         )
                       }

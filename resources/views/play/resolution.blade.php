@@ -15,8 +15,12 @@
                     <div class="row">
                         <div class="col text-center">
                             <h1 class="display-2">Congratulations!</h1>
-                            <p class="lead">You have completed the scavenger hunt!</p>
-                            <button class="btn btn-lg btn-info">Claim your prize</button>
+                            <p class="lead">{{$code->campaign->resolution_text}}</p>
+                            @if (!is_null($code->campaign->resolution_link))
+                            <a href="{{$code->campaign->resolution_link}}"class="btn btn-lg btn-info" target="_blank">
+                                Claim your prize
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>

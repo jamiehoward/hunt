@@ -18,6 +18,8 @@ class CreateCampaignsTable extends Migration
             $table->string('title');
             $table->text('introduction');
             $table->unsignedInteger('user_id');
+            $table->text('resolution_text')->nullable();
+            $table->string('resolution_link')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

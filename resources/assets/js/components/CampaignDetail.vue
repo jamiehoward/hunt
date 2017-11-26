@@ -15,11 +15,24 @@
                     <h1 class="display-3">Edit campaign</h1>
                     <form v-on:submit.prevent="saveCampaign">
                         <div class="form-group">
+                            <label class="form-label">Campaign title</label>
                             <input type="text" v-model='campaign.title' class="form-control form-control-lg" id="campaign-title" />
                         </div>
 
                         <div class="form-group">
+                            <label class="form-label">Introduction text</label>
                             <textarea type="text" v-model='campaign.introduction' class="form-control form-control-lg"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Resolution text</label>
+                            <textarea type="text" v-model='campaign.resolution_text' class="form-control form-control-lg"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Resolution link</label>
+                            <input type="text" class="form-control
+                             form-control-lg" v-model='campaign.resolution_link' />
                         </div>
 
                         <div class="form-group">
@@ -55,7 +68,13 @@
             saveCampaign : function () {                
                 const self = this;
 
-                axios.put('/api/campaigns/' + this.campaign.id, { title: this.campaign.title, introduction: this.campaign.introduction })
+                axios.put('/api/campaigns/' + this.campaign.id, 
+                    { 
+                        title: this.campaign.title, 
+                        introduction: this.campaign.introduction,
+                        resolution_text: this.campaign.resolution_text,
+                        resolution_link: this.campaign.resolution_link,
+                    })
                   .then(function(response){
 
                     swal("Campaign successfully update!", {

@@ -35,7 +35,7 @@ class PlayController extends Controller
         if (is_null($code->started_at)) {
             return $this->showIntro($code);
         } elseif ($clues->count() == 0) {
-            return view('play.resolution');
+            return view('play.resolution', compact('code'));
         }
 
         return $this->showClue($code);

@@ -72,15 +72,14 @@ class CampaignController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        $this->validate($request, [
+        $attributes = $this->validate($request, [
             'title' => 'required',
             'introduction' => 'required',
+            'resolution_text' => 'nullable|max:1000',
+            'resolution_link' => 'nullable|url',
             ]);
 
-        $campaign->update([
-            'title' => $request->title,
-            'introduction' => $request->introduction,
-            ]);
+        $campaign->update($attributes);
 
         return response($campaign);
     }
