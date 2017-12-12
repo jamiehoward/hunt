@@ -46,7 +46,7 @@ class AnswerController extends Controller
         $answer = Answer::create([
             'clue_id' => $clue->id,
             'user_id' => \Auth::user()->id,
-            'content' => $request->content,
+            'content' => trim($request->content),
             ]);
 
         return response($answer);
