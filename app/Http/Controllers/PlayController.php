@@ -11,7 +11,7 @@ class PlayController extends Controller
 {
     public function index(string $code)
     {
-        $campaign = Campaign::findByCode($code);
+        $campaign = Campaign::findByCode(strtoupper($code));
 
         foreach ($campaign->players as $player) {
             if ($player->pivot->code == $code) {
