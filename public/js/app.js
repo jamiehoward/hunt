@@ -42662,7 +42662,17 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._m(0)
+                  _c("span", { staticClass: "input-group-btn" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning",
+                        attrs: { type: "button" },
+                        on: { click: _vm.submitAnswer }
+                      },
+                      [_vm._v("Guess!")]
+                    )
+                  ])
                 ])
               ]
             )
@@ -42671,22 +42681,10 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(0)
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "input-group-btn" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-warning", attrs: { type: "button" } },
-        [_vm._v("Guess!")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

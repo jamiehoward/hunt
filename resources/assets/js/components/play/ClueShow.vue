@@ -22,7 +22,7 @@
                             <div class="input-group">
                               <input type="text" class="form-control" placeholder="Answer" aria-label="Answer" v-model="answer" required>
                               <span class="input-group-btn">
-                                <button class="btn btn-warning" type="button">Guess!</button>
+                                <button v-on:click="submitAnswer" class="btn btn-warning" type="button">Guess!</button>
                               </span>
                             </div>
                         </form>
