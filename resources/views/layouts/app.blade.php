@@ -22,7 +22,7 @@
             @guest
                 <div>
                     <a href="{{ route('login') }}" id="login" style="margin-right:8px;">Login</a>
-                    <a href="{{ route('register') }}">Register</a>
+                    <a href="{{ route('register') }}" id="register">Register</a>
                 </div>
             @else
                 <div>
