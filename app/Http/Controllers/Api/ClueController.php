@@ -85,7 +85,9 @@ class ClueController extends Controller
      */
     public function update(Request $request, Clue $clue)
     {
-        //
+        $clue->update($request->all());
+
+        return response($clue);
     }
 
     /**
