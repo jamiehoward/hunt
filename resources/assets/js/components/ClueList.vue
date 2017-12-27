@@ -5,15 +5,15 @@
                 <h4 class="card-title">Add a new clue</h4>
                 <form id="create-campaign-form"  v-on:submit.prevent="saveClue">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder='Label' v-model="label" required />
+                        <input type="text" class="form-control" id="clue-label" placeholder='Label' v-model="label" required />
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder='Answer' v-model="answer" required />
+                        <input type="text" class="form-control" id="clue-answer" placeholder='Answer' v-model="answer" required />
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" class="btn btn-block btn-primary" value="Save Clue">
+                        <input type="submit" class="btn btn-block btn-primary" id="clue-submit" value="Save Clue">
                     </div>
 
                 </form>

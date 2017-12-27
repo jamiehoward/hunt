@@ -41575,7 +41575,12 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Label", required: "" },
+                attrs: {
+                  type: "text",
+                  id: "clue-label",
+                  placeholder: "Label",
+                  required: ""
+                },
                 domProps: { value: _vm.label },
                 on: {
                   input: function($event) {
@@ -41599,7 +41604,12 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Answer", required: "" },
+                attrs: {
+                  type: "text",
+                  id: "clue-answer",
+                  placeholder: "Answer",
+                  required: ""
+                },
                 domProps: { value: _vm.answer },
                 on: {
                   input: function($event) {
@@ -41689,7 +41699,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form-group" }, [
       _c("input", {
         staticClass: "btn btn-block btn-primary",
-        attrs: { type: "submit", value: "Save Clue" }
+        attrs: { type: "submit", id: "clue-submit", value: "Save Clue" }
       })
     ])
   }
