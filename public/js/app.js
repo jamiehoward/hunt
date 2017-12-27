@@ -41472,71 +41472,134 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['campaign'],
-  data: function data() {
-    return {
-      clues: [],
-      label: '',
-      answer: ''
-    };
-  },
-  methods: {
-    saveClue: function saveClue() {
-      var self = this;
-
-      axios.post('/api/campaigns/' + this.campaign + '/clues', { label: this.label, answer: this.answer }).then(function (response) {
-        self.getClues();
-
-        self.label = self.answer = '';
-
-        swal("Clue successfully created!", {
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-      });
+    props: ['campaign'],
+    data: function data() {
+        return {
+            clues: [],
+            label: '',
+            answer: '',
+            editingClue: {}
+        };
     },
-    deleteClue: function deleteClue(id) {
-      var self = this;
+    methods: {
+        saveClue: function saveClue() {
+            var self = this;
 
-      swal("Are you sure that you want to delete this clue?", {
-        buttons: {
-          cancel: "Cancel",
-          delete: true
-        }
-      }).then(function (value) {
-        switch (value) {
+            axios.post('/api/campaigns/' + this.campaign + '/clues', { label: this.label, answer: this.answer }).then(function (response) {
+                self.getClues();
 
-          case "cancel":
-            swal.close();
-            break;
+                self.label = self.answer = '';
 
-          case "delete":
-            axios.delete('/api/clues/' + id).then(function (response) {
-              self.getClues();
+                swal("Clue successfully created!", {
+                    icon: 'success',
+                    button: false,
+                    timer: 1500
+                });
+            });
+        },
+        deleteClue: function deleteClue(id) {
+            var self = this;
 
-              swal("Campaign successfully deleted!", {
-                icon: 'success',
-                button: false,
-                timer: 1500
-              });
+            swal("Are you sure that you want to delete this clue?", {
+                buttons: {
+                    cancel: "Cancel",
+                    delete: true
+                }
+            }).then(function (value) {
+                switch (value) {
+
+                    case "cancel":
+                        swal.close();
+                        break;
+
+                    case "delete":
+                        axios.delete('/api/clues/' + id).then(function (response) {
+                            self.getClues();
+
+                            swal("Campaign successfully deleted!", {
+                                icon: 'success',
+                                button: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            });
+        },
+        showClue: function showClue(clue) {
+            console.log(clue);
+            this.editingClue = clue;
+            $("#clueEditModal").modal().show();
+        },
+        getClues: function getClues() {
+            var _this = this;
+
+            axios.get('/api/campaigns/' + this.campaign + '/clues').then(function (response) {
+                return _this.clues = response.data;
+            });
+        },
+        updateClue: function updateClue() {
+            var self = this;
+            axios.put('/api/clues/' + this.editingClue.id, {
+                label: this.editingClue.label,
+                answer: this.editingClue.answer
+            }).then(function (response) {
+                if (response.errors) {
+                    swal(response.errors.firstChild[0]);
+                } else {
+                    self.getClues();
+
+                    swal("Clue successfully updated!", {
+                        icon: 'success',
+                        button: false,
+                        timer: 1500
+                    });
+                }
+            }).catch(function (error) {
+                var errors = error.response.data.errors;
+
+                // Display the first error
+                swal(errors[Object.getOwnPropertyNames(errors)[0]][0], {
+                    icon: 'error',
+                    button: false,
+                    timer: 2000
+                });
             });
         }
-      });
     },
-    getClues: function getClues() {
-      var _this = this;
-
-      axios.get('/api/campaigns/' + this.campaign + '/clues').then(function (response) {
-        return _this.clues = response.data;
-      });
+    mounted: function mounted() {
+        this.getClues();
     }
-  },
-  mounted: function mounted() {
-    this.getClues();
-  }
 });
 
 /***/ }),
@@ -41633,15 +41696,14 @@ var render = function() {
         _c("h4", { staticClass: "card-title" }, [_vm._v("Clues")]),
         _vm._v(" "),
         _c(
-          "div",
+          "ul",
           { staticClass: "list-group" },
           _vm._l(_vm.clues, function(clue) {
             return _c(
-              "a",
+              "li",
               {
                 staticClass:
-                  "list-group-item list-group-item-action flex-column align-items-start",
-                attrs: { href: "#" }
+                  "list-group-item list-group-item-action flex-column align-items-start"
               },
               [
                 _c(
@@ -41672,7 +41734,22 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("p", { staticClass: "mb-1" }, [_vm._v(_vm._s(clue.answer))])
+                _c("p", { staticClass: "mb-1" }, [_vm._v(_vm._s(clue.answer))]),
+                _vm._v(" "),
+                _c("small", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.showClue(clue)
+                        }
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  )
+                ])
               ]
             )
           })
@@ -41688,7 +41765,125 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" })
+    _c("div", { staticClass: "row" }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "clueEditModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "clueEditModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("form", { staticClass: "form" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editingClue.label,
+                          expression: "editingClue.label"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Label",
+                        required: ""
+                      },
+                      domProps: { value: _vm.editingClue.label },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editingClue,
+                            "label",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editingClue.answer,
+                          expression: "editingClue.answer"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "answer",
+                        placeholder: "Answer",
+                        required: ""
+                      },
+                      domProps: { value: _vm.editingClue.answer },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editingClue,
+                            "answer",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.updateClue(_vm.editingClue)
+                      }
+                    }
+                  },
+                  [_vm._v("Save changes")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -41701,6 +41896,31 @@ var staticRenderFns = [
         staticClass: "btn btn-block btn-primary",
         attrs: { type: "submit", id: "clue-submit", value: "Save Clue" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "clueEditModalLabel" } },
+        [_vm._v("Edit clue")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
